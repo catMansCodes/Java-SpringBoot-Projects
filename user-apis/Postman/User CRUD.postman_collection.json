@@ -1,0 +1,147 @@
+{
+  "info": {
+    "_postman_id": "34244334-f0e8-4108-958e-85c99870fc85",
+    "name": "User CRUD",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "16075219"
+  },
+  "item": [
+    {
+      "name": "Get All User",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/users",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get User By Id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8080/api/v1/users/6",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "users",
+            "6"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete User By Id",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{env}}/api/v1/users/6",
+          "host": [
+            "{{env}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users",
+            "6"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add User",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstName\": \"jerry\",\r\n    \"lastName\": \"coder jerry\",\r\n    \"email\": \"jcoder1@gmail.com\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/api/v1/users",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update User",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{   \r\n    \"firstName\": \"Cat Man\",\r\n    \"lastName\": \"code\",\r\n    \"email\": \"catmanscodes26@gmail.com\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{env}}/api/v1/users/4",
+          "host": [
+            "{{env}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users",
+            "4"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Welcome",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{env}}/welcome",
+          "host": [
+            "{{env}}"
+          ],
+          "path": [
+            "welcome"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
