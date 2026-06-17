@@ -1,0 +1,296 @@
+{
+  "info": {
+    "_postman_id": "43142048-8ced-4803-9a7f-014f1aaabd16",
+    "name": "Todo-App",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "16075219"
+  },
+  "item": [
+    {
+      "name": "Get All Todos",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "password",
+              "value": "catman",
+              "type": "string"
+            },
+            {
+              "key": "username",
+              "value": "catman",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{env}}/api/todos",
+          "host": [
+            "{{env}}"
+          ],
+          "path": [
+            "api",
+            "todos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Todo By Id",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "password",
+              "value": "catman",
+              "type": "string"
+            },
+            {
+              "key": "username",
+              "value": "catman",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{env}}/api/todos/2",
+          "host": [
+            "{{env}}"
+          ],
+          "path": [
+            "api",
+            "todos",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Todo",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "username",
+              "value": "jarvis@gmail.com",
+              "type": "string"
+            },
+            {
+              "key": "password",
+              "value": "jarvis",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{env}}/api/todos/1",
+          "host": [
+            "{{env}}"
+          ],
+          "path": [
+            "api",
+            "todos",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Todo",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "password",
+              "value": "admin",
+              "type": "string"
+            },
+            {
+              "key": "username",
+              "value": "admin",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"POMODO New\",\r\n    \"description\": \"read 30 minute\",\r\n    \"completed\": false\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{env}}/api/todos/create",
+          "host": [
+            "{{env}}"
+          ],
+          "path": [
+            "api",
+            "todos",
+            "create"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update todo",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\r\n    \"title\": \"POMODO three\",\r\n    \"description\": \"read 30 minute\",\r\n    \"completed\": false\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{env}}/api/todos/1",
+          "host": [
+            "{{env}}"
+          ],
+          "path": [
+            "api",
+            "todos",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Complete Todo",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "{{env}}/api/todos/4/complete",
+          "host": [
+            "{{env}}"
+          ],
+          "path": [
+            "api",
+            "todos",
+            "4",
+            "complete"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "In-Complete Todo",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "{{env}}/api/todos/4/incomplete",
+          "host": [
+            "{{env}}"
+          ],
+          "path": [
+            "api",
+            "todos",
+            "4",
+            "incomplete"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Register User",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"catman\",\r\n    \"userName\": \"catman\",\r\n    \"email\": \"catman@gmail.com\",\r\n    \"password\": \"catman\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{env}}/api/auth/register",
+          "host": [
+            "{{env}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login App",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "password",
+              "value": "admin",
+              "type": "string"
+            },
+            {
+              "key": "username",
+              "value": "admin",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"emailOrUserName\": \"catman@gmail.com\",\r\n    \"password\": \"catman\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{env}}/api/auth/login",
+          "host": [
+            "{{env}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
