@@ -1,10 +1,9 @@
-package org.catmanscode.springbootkafka.kafka;
+package org.catmanscode.springbootkafka.service;
 
-import org.catmanscode.springbootkafka.model.User;
+import org.catmanscode.springbootkafka.dto.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
@@ -16,11 +15,10 @@ public class JsonKafkaProducer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonKafkaProducer.class);
 
-    @Value("${spring.kafka.topic..json.name}")
+    @Value("${spring.kafka.topic.json.name}")
     private String topicJsonName;
 
-    private KafkaTemplate<String, User> kafkaTemplate;
-
+    private final KafkaTemplate<String, User> kafkaTemplate;
 
     public JsonKafkaProducer(KafkaTemplate<String, User> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;

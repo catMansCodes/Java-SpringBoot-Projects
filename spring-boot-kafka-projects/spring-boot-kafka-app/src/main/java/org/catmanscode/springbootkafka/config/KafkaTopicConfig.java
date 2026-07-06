@@ -9,11 +9,10 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 public class KafkaTopicConfig {
 
-
     @Value("${spring.kafka.topic.name}")
     private String topicName;
 
-    @Value("${spring.kafka.topic..json.name}")
+    @Value("${spring.kafka.topic.json.name}")
     private String topicJsonName;
 
     @Bean

@@ -1,7 +1,7 @@
 package org.catmanscode.springbootkafka.controller;
 
-import org.catmanscode.springbootkafka.kafka.JsonKafkaProducer;
-import org.catmanscode.springbootkafka.model.User;
+import org.catmanscode.springbootkafka.service.JsonKafkaProducer;
+import org.catmanscode.springbootkafka.dto.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/kafka")
 public class JasonMessageController {
 
-    private JsonKafkaProducer jsonKafkaProducer;
+    private final JsonKafkaProducer jsonKafkaProducer;
 
     public JasonMessageController(JsonKafkaProducer jsonKafkaProducer) {
         this.jsonKafkaProducer = jsonKafkaProducer;

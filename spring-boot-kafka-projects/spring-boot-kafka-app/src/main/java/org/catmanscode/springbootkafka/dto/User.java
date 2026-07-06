@@ -1,4 +1,4 @@
-package org.catmanscode.springbootkafka.model;
+package org.catmanscode.springbootkafka.dto;
 
 public class User {
 
