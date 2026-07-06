@@ -2,8 +2,7 @@ package org.catmanscode.springbootkafkaproducer.service;
 
 import com.launchdarkly.eventsource.EventHandler;
 import com.launchdarkly.eventsource.EventSource;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.catmanscode.springbootkafkaproducer.handler.WikimediaEventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +14,7 @@ import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
 @Service
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class WikimediaProducerService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WikimediaProducerService.class);
@@ -28,7 +26,9 @@ public class WikimediaProducerService {
 
     public void sendMessageToProducer() throws InterruptedException {
 
-        // To read realtime stream data from wikimedia to producer, we use the event source i.e OkHTTP EventSource third party Jar
+        // To read realtime stream data from wikimedia to producer, we use the event source i.e Ok HTTP EventSource third party Jar
+
+        LOGGER.info("Sending Wikimedia event sendMessageToProducer Called");
 
         EventHandler eventHandler = new WikimediaEventHandler(kafkaTemplate, topicName);
 
