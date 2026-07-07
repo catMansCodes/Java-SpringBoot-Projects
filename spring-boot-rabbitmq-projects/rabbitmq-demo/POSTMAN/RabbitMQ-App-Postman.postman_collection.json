@@ -1,0 +1,63 @@
+{
+  "info": {
+    "_postman_id": "51ff70bc-f494-4918-bc31-5b92253c4334",
+    "name": "RabbitMQ-App-Postman",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "16075219"
+  },
+  "item": [
+    {
+      "name": "Rabbitmq-String-Producer",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"claude\",\r\n    \"department\": \"AI Development\",\r\n    \"salary\": 250000.00\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{env}}/api/v1/publish",
+          "host": [
+            "{{env}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "publish"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Rabbitmq-Producer-String",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{env}}/api/v1/publish?message=Java is the best",
+          "host": [
+            "{{env}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "publish"
+          ],
+          "query": [
+            {
+              "key": "message",
+              "value": "Java is the best"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
