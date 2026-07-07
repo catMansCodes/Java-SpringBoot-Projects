@@ -15,6 +15,9 @@ This is a monorepo of independent Spring Boot 3 / Java 17 demo applications. The
 | User APIs | `user-apis/` | REST CRUD for users, standalone (also consumed conceptually by `todo-apis`) |
 | Kafka demo app | `spring-boot-kafka-projects/spring-boot-kafka-app/` | Single-module producer/consumer demo (string + JSON messages) |
 | Kafka real-world project | `spring-boot-kafka-projects/springboot-kafka-real-world-project/` | Multi-module Maven build (`kafka-producer-wikimedia`, `kafka-consumer-database`) |
+| Kafka event-driven microservices | `spring-boot-kafka-projects/springboot-kafka-event-driven-microservice/` | Three independent services: `order-service` (producer), `stock-service`, `email-service` (consumers) |
+| RabbitMQ demo app | `spring-boot-rabbitmq-projects/rabbitmq-demo/` | Single-module demo: topic exchange, string + JSON (`Employee`) messages, Docker Compose |
+| RabbitMQ microservices | `spring-boot-rabbitmq-projects/rabbitmq-microservices/` | Three independent services: `user-service` (producer), `sms-service`, `email-service` (consumers) |
 
 Each app under the four main folders (`banking-application`, `expense-tracker-application`, `student-management-system`, plus `todo-apis`, `user-apis`) follows the same internal layering: `controller -> service (+ impl) -> repository (Spring Data JPA)`, with `dto`, `entity`/`model`, `mapper`, and `exception` packages alongside. Look at one app's package layout before adding code to another — conventions are consistent across apps even though base packages differ (`org.catmanscodes.*` vs `com.catmanscodes.*`).
 
