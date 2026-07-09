@@ -84,6 +84,94 @@ STEP 5: READ THE EVENTS
 	Hello Jarvis
 	Catmanscode demo
 
+---
+
+# Apache Kafka (v3.7.0) KRaft Mode Setup on Windows
+
+This guide provides a step-by-step walkthrough to set up and run Apache Kafka version `3.7.0` in **KRaft (Kafka Raft) mode** on a local Windows machine. 
+
+With KRaft mode, **ZooKeeper is not required**. Kafka manages its own metadata cluster internally.
+
+---
+
+## 📋 Prerequisites
+
+Before starting, ensure you have the following installed on your Windows machine:
+* **Java JDK 11 or higher** (Ensure `JAVA_HOME` is set in your environment variables).
+* **Kafka Binary Archive**: `kafka_2.13-3.7.0.tgz` extracted to your local drive (e.g., `D:\Study\env\config\kafka`).
+
+---
+
+## 🚀 Step-by-Step Installation & Execution
+
+Open your **Command Prompt (cmd)** as an Administrator and navigate to your Kafka root installation directory:
+
+```cmd
+cd D:\Study\env\config\kafka
+```
+
+### Step 1: Generate a Cluster UUID
+Kafka KRaft requires a unique ID to identify the cluster. Generate a random UUID by running:
+
+```cmd
+.\bin\windows\kafka-storage.bat random-uuid
+```
+* **Action Required:** Copy the generated unique string output (e.g., `xt99ep6YTW669...`) from the console.
+
+### Step 2: Format the Kafka Storage Directory
+Format your log directories using the cluster UUID you copied in the previous step. Replace `YOUR_GENERATED_UUID` with your actual string:
+
+```cmd
+.\bin\windows\kafka-storage.bat format -t YOUR_GENERATED_UUID -c .\config\kraft\server.properties
+```
+* You should see a success message: `Formatting metadata directory...`
+
+### Step 3: Start the Kafka Server
+Launch the single-node Kafka broker using the KRaft configuration file. **Keep this command prompt window open** to keep Kafka running:
+
+```cmd
+.\bin\windows\kafka-server-start.bat .\config\kraft\server.properties
+```
+
+---
+
+## 🧪 Verifying the Setup (PoC Verification)
+
+To verify that your ZooKeeper-less cluster is running perfectly, open a **new, separate Command Prompt window**, navigate to your Kafka directory, and run the following verification tests:
+
+### 1. Create a Test Topic
+Create a new topic named `test-topic`:
+
+```cmd
+.\bin\windows\kafka-topics.bat --create --topic test-topic --bootstrap-server localhost:9092
+```
+
+### 2. Start a Console Producer (Send Messages)
+Run the producer to open an interactive terminal session where you can type messages:
+
+```cmd
+.\bin\windows\kafka-console-producer.bat --topic test-topic --bootstrap-server localhost:9092
+```
+* *Type a few lines of text (e.g., "Hello Kafka", "Testing KRaft Mode") and press Enter after each.*
+
+### 3. Start a Console Consumer (Receive Messages)
+Open a **third** Command Prompt window and run the consumer to read the streamed data from the beginning:
+
+```cmd
+.\bin\windows\kafka-console-consumer.bat --topic test-topic --from-beginning --bootstrap-server localhost:9092
+```
+* *You should instantly see the messages you typed in the producer terminal appear here.*
+
+---
+
+## 🛠️ Troubleshooting Windows-Specific Issues
+
+### "The input line is too long" Error
+* **Cause:** Windows command line limits script paths if your Kafka installation directory path is too deep.
+* **Fix:** Move the extracted Kafka directory closer to the drive root (e.g., `D:\kafka`) and rerun the steps.
+
+### Port Conflicts
+* KRaft mode uses port `9092` for client traffic and port `9093` for controller quorum communication. Ensure these ports are not being used by other local applications.
 
 
 
