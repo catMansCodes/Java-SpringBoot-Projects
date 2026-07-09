@@ -1,131 +1,240 @@
-Prerequisites
+# Redis Installation using Docker (Windows)
 
-Make sure you already have:
+This guide walks through installing and running **Redis** on Windows using **Docker Desktop**. This is the recommended approach because it closely resembles production environments and avoids installing Redis directly on Windows.
 
-✅ Docker Desktop installed
-✅ Docker Desktop running
-✅ docker command working
+---
 
-Verify:
+# Prerequisites
 
+Before starting, make sure you have the following installed:
+
+- ✅ Docker Desktop
+- ✅ Docker Desktop is running
+- ✅ Docker CLI is accessible from your terminal
+
+Verify Docker installation:
+
+```bash
 docker --version
+```
 
 Example:
 
+```text
 Docker version 28.x.x
-Pull the Redis Image
+```
 
-Download the latest Redis image:
+---
 
+# Pull the Redis Docker Image
+
+Download the latest Redis image from Docker Hub.
+
+```bash
 docker pull redis:latest
+```
 
-Check the downloaded image:
+Verify the image has been downloaded:
 
+```bash
 docker images
+```
 
-Example:
+Example output:
 
-REPOSITORY   TAG       IMAGE ID
+```text
+REPOSITORY    TAG       IMAGE ID
+redis         latest    xxxxxxxxx
+```
 
-redis        latest    xxxxxxxxx
-Run Redis
+---
 
-The simplest command:
+# Run Redis Container
 
-docker run -d \
-  --name redis-server \
-  -p 6379:6379 \
-  redis:latest
+Start a Redis container.
 
-On Windows PowerShell or CMD, use a single line:
-
+```bash
 docker run -d --name redis-server -p 6379:6379 redis:latest
+```
 
-Explanation:
+### Command Explanation
 
-Option	Meaning
--d	Run in background
---name redis-server	Container name
--p 6379:6379	Map Redis port
-redis:latest	Redis image
+| Option | Description |
+|----------|-------------|
+| `-d` | Run the container in detached (background) mode |
+| `--name redis-server` | Assign a custom container name |
+| `-p 6379:6379` | Map Redis port 6379 from the container to the host machine |
+| `redis:latest` | Redis Docker image |
 
-Check that it's running:
+---
 
+# Verify Redis Container
+
+Check whether the Redis container is running.
+
+```bash
 docker ps
+```
 
-You should see something like:
+Example output:
 
-CONTAINER ID
+```text
+CONTAINER ID   IMAGE           PORTS
+xxxxxxxxxxx    redis:latest    0.0.0.0:6379->6379/tcp
+```
 
-redis-server
+---
 
-0.0.0.0:6379->6379
-Verify Redis
+# Connect to Redis
 
-Enter the container:
+Open the Redis CLI inside the running container.
 
+```bash
 docker exec -it redis-server redis-cli
+```
 
-Now you're inside Redis:
+Successful connection:
 
+```text
 127.0.0.1:6379>
+```
 
-Test it:
+---
 
+# Verify Redis Installation
+
+Run the following command:
+
+```bash
 PING
+```
 
 Output:
 
+```text
 PONG
+```
 
-Congratulations—Redis is running.
+If you receive **PONG**, Redis is running successfully.
 
-Try Some Commands
+---
 
-Store a value:
+# Basic Redis Commands
 
+### Store a Value
+
+```bash
 SET name Vimal
+```
 
-Read it:
+Output
 
+```text
+OK
+```
+
+---
+
+### Retrieve a Value
+
+```bash
 GET name
+```
 
-Output:
+Output
 
+```text
 "Vimal"
+```
 
-Delete it:
+---
 
+### Delete a Value
+
+```bash
 DEL name
-Exit Redis CLI
+```
+
+Output
+
+```text
+(integer) 1
+```
+
+---
+
+# Exit Redis CLI
+
+```bash
 QUIT
+```
 
-Exit the container shell:
+or
 
+```bash
 exit
-Stop Redis
+```
+
+---
+
+# Docker Container Management
+
+## Stop Redis
+
+```bash
 docker stop redis-server
-Start Again
+```
+
+---
+
+## Start Redis
+
+```bash
 docker start redis-server
-Restart
+```
+
+---
+
+## Restart Redis
+
+```bash
 docker restart redis-server
-Remove Container
+```
+
+---
+
+## Remove Redis Container
+
+```bash
 docker rm -f redis-server
+```
 
-This removes only the container, not the downloaded image.
+> **Note:** This removes only the container. The Redis Docker image remains on your machine.
 
-Remove Image
+---
+
+## Remove Redis Image
+
+```bash
 docker rmi redis:latest
-A Better Setup: Docker Compose
+```
 
-Instead of docker run, I usually create a docker-compose.yml.
+---
 
+# Running Redis with Docker Compose (Recommended)
+
+Instead of using `docker run`, it's recommended to use Docker Compose for better maintainability.
+
+Create a file named:
+
+```
+docker-compose.yml
+```
+
+```yaml
 services:
-
   redis:
-
     image: redis:7.2
-
     container_name: redis-server
 
     ports:
@@ -138,71 +247,167 @@ services:
 
 volumes:
   redis-data:
+```
 
-Start it:
+---
 
+## Start Redis
+
+```bash
 docker compose up -d
+```
 
-Stop it:
+---
 
+## Stop Redis
+
+```bash
 docker compose down
-Why use a Volume?
+```
 
-Without a volume:
+---
 
+# Why Use Docker Volumes?
+
+## Without Volume
+
+```text
 Stop Container
-
-↓
-
+      │
+      ▼
 Remove Container
+      │
+      ▼
+All Redis Data Lost
+```
 
-↓
+---
 
-Everything Lost
+## With Volume
 
-With a volume:
-
-Redis
-
-↓
-
+```text
+Redis Container
+        │
+        ▼
 Docker Volume
+        │
+        ▼
+Data Persists
+```
 
-↓
+Using a Docker volume ensures Redis data survives container removal and recreation. This becomes especially important when working with **Redis Persistence (RDB/AOF)**.
 
-Data Survives
+---
 
-This becomes important when we discuss persistence (RDB/AOF).
+# Useful Docker Commands
 
-Useful Docker Commands
+## View Container Logs
 
-Check logs:
-
+```bash
 docker logs redis-server
+```
 
-Follow logs:
+---
 
+## Follow Live Logs
+
+```bash
 docker logs -f redis-server
+```
 
-Container details:
+---
 
+## Inspect Container Details
+
+```bash
 docker inspect redis-server
-GUI Tools (Highly Recommended)
+```
 
-Working only with redis-cli becomes tedious. I recommend using a GUI.
+---
 
-Redis Insight (Official)
+## List Running Containers
 
-This is Redis's official desktop GUI.
+```bash
+docker ps
+```
 
-It lets you:
+---
 
-Browse keys
-Edit values
-View TTL
-Monitor memory
-Run commands
-Inspect Streams
-View Hashes, Lists, Sets, etc.
+## List All Containers
 
-It's the tool I recommend for development.
+```bash
+docker ps -a
+```
+
+---
+
+## List Docker Images
+
+```bash
+docker images
+```
+
+---
+
+# Redis GUI Tool (Recommended)
+
+Although `redis-cli` is useful for learning and debugging, working with large amounts of data becomes difficult.
+
+The recommended GUI is:
+
+## Redis Insight (Official)
+
+Redis Insight allows you to:
+
+- Browse Redis keys
+- Edit key values
+- View TTL
+- Execute Redis commands
+- Inspect Hashes
+- Inspect Lists
+- Inspect Sets
+- Inspect Sorted Sets
+- View Streams
+- Monitor memory usage
+- Analyze Redis performance
+
+It is the official GUI provided by Redis and is highly recommended for local development.
+
+---
+
+# Quick Reference
+
+| Task | Command |
+|------|---------|
+| Pull Redis Image | `docker pull redis:latest` |
+| Run Redis | `docker run -d --name redis-server -p 6379:6379 redis:latest` |
+| View Running Containers | `docker ps` |
+| Open Redis CLI | `docker exec -it redis-server redis-cli` |
+| Test Connection | `PING` |
+| Stop Redis | `docker stop redis-server` |
+| Start Redis | `docker start redis-server` |
+| Restart Redis | `docker restart redis-server` |
+| Remove Container | `docker rm -f redis-server` |
+| Remove Image | `docker rmi redis:latest` |
+| Docker Compose Start | `docker compose up -d` |
+| Docker Compose Stop | `docker compose down` |
+| View Logs | `docker logs redis-server` |
+| Follow Logs | `docker logs -f redis-server` |
+| Inspect Container | `docker inspect redis-server` |
+
+---
+
+# Next Steps
+
+Now that Redis is running successfully, the next step is to integrate it with a **Spring Boot 3 + Java 17** application.
+
+We'll cover:
+
+1. Redis Configuration in Spring Boot
+2. `RedisTemplate`
+3. `StringRedisTemplate`
+4. Caching with `@Cacheable`
+5. `@CachePut`
+6. `@CacheEvict`
+7. TTL Configuration
+8. Building a Weather API using Redis Cache
