@@ -265,6 +265,48 @@ Three independent Spring Boot services demonstrating a pub/sub flow: one produce
 
 ---
 
+## 8. Spring Boot & Redis Projects
+
+**Path:** `spring-boot-redis-projects/`
+
+Projects exploring Redis with Spring Boot. `spring-boot-redis-projects/README.md` documents the
+Windows/Docker Redis workflow (pull, run, `redis-cli`, Docker Compose, Redis Insight).
+
+### 8.1 Weather App
+
+**Path:** `spring-boot-redis-projects/weather-app/`
+
+A small but production-oriented REST API for weather records, built to exercise most of the major
+building blocks of a real Spring Boot service, using **MySQL** with a **Redis** cache layer.
+
+- **Tech stack:** Java 17, Spring Boot 3.5.16, Spring Data JPA, Spring Data Redis, Flyway,
+  MapStruct, Lombok, Bean Validation, springdoc-openapi (Swagger), Logback
+- **Base package:** `com.catmanscodes.weatherapp`
+- **Implemented features:**
+  - CRUD with pagination; get by id and by city
+  - **Flyway** migrations own the schema (`V1__create_weather_table.sql`); Hibernate `ddl-auto=validate`
+  - **Redis cache-aside** (`@Cacheable`/`@CacheEvict`, 10-min TTL) on read endpoints
+  - MapStruct entity↔DTO mapping, Lombok entity + Java record DTO, `@CreationTimestamp`/`@UpdateTimestamp`
+  - Global exception handling (`404`/`409`/`400`/`500`) and Bean Validation
+  - Logback console + rolling **error-only** file appender
+  - OpenAPI/Swagger UI
+- **Database:** MySQL `weather_db` (auto-created via `createDatabaseIfNotExist=true`; schema via Flyway, **not** `ddl-auto=update`)
+- **Redis:** `localhost:6379` — start via the app's `docker-compose.yml` (`docker compose up -d`)
+- **Endpoints** (`/api/v1/weather`, no auth yet):
+  | Method | Path | Description |
+  |---|---|---|
+  | GET | `?page=&size=&sort=` | List records (paged) |
+  | GET | `/{id}` | Get record by id (cached) |
+  | GET | `/city/{city}` | Get record by city (cached) |
+  | POST | `/create` | Create a record |
+  | PUT | `/{id}` | Update a record |
+  | DELETE | `/{id}` | Delete a record |
+- **API docs:** http://localhost:8080/swagger-ui.html
+- **API testing:** Postman collection at `spring-boot-redis-projects/weather-app/Postman/weather-app.postman_collection.json`
+- **Status / roadmap:** Steps 1–9 are implemented and verified. **Out of scope for now** (to be resumed later): Spring Security (JWT), Actuator, full Dockerization (MySQL in compose + `Dockerfile`), tests, CI/CD, and AWS deployment. See the app's `PLAN.md` and `README.md`.
+
+---
+
 ## Running an application
 
 Each app is built and run independently using its own Maven wrapper, from inside the app's directory:
@@ -274,4 +316,4 @@ Each app is built and run independently using its own Maven wrapper, from inside
 ./mvnw spring-boot:run   # run
 ```
 
-All MySQL-backed apps expect a pre-created database (see per-project database name above) and use local default credentials (`root`/`root`). Schema is auto-managed via `spring.jpa.hibernate.ddl-auto=update` — no manual migrations needed.
+All MySQL-backed apps expect a pre-created database (see per-project database name above) and use local default credentials (`root`/`root`). Schema is auto-managed via `spring.jpa.hibernate.ddl-auto=update` — no manual migrations needed. The one exception is **Weather App** (§8.1), which auto-creates its database and manages schema with **Flyway** migrations (`ddl-auto=validate`).

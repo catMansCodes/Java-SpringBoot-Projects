@@ -18,8 +18,9 @@ This is a monorepo of independent Spring Boot 3 / Java 17 demo applications. The
 | Kafka event-driven microservices | `spring-boot-kafka-projects/springboot-kafka-event-driven-microservice/` | Three independent services: `order-service` (producer), `stock-service`, `email-service` (consumers) |
 | RabbitMQ demo app | `spring-boot-rabbitmq-projects/rabbitmq-demo/` | Single-module demo: topic exchange, string + JSON (`Employee`) messages, Docker Compose |
 | RabbitMQ microservices | `spring-boot-rabbitmq-projects/rabbitmq-microservices/` | Three independent services: `user-service` (producer), `sms-service`, `email-service` (consumers) |
+| Weather App (Redis) | `spring-boot-redis-projects/weather-app/` | REST CRUD for weather backed by MySQL with a Redis cache layer. **Work in progress** — service methods are still stubs (return `null`/empty); its `README.md` is a checklist of planned features (Spring Security, Swagger, JUnit, CI/CD, AWS), most not yet built |
 
-Each app under the four main folders (`banking-application`, `expense-tracker-application`, `student-management-system`, plus `todo-apis`, `user-apis`) follows the same internal layering: `controller -> service (+ impl) -> repository (Spring Data JPA)`, with `dto`, `entity`/`model`, `mapper`, and `exception` packages alongside. Look at one app's package layout before adding code to another — conventions are consistent across apps even though base packages differ (`org.catmanscodes.*` vs `com.catmanscodes.*`).
+Each app under the four main folders (`banking-application`, `expense-tracker-application`, `student-management-system`, plus `todo-apis`, `user-apis`, and `spring-boot-redis-projects/weather-app`) follows the same internal layering: `controller -> service (+ impl) -> repository (Spring Data JPA)`, with `dto`, `entity`/`model`, `mapper`, and `exception` packages alongside. Look at one app's package layout before adding code to another — conventions are consistent across apps even though base packages differ (`org.catmanscodes.*` vs `com.catmanscodes.*`).
 
 ## Build, run, test commands
 
@@ -53,8 +54,13 @@ All non-Kafka apps use MySQL with `spring.jpa.hibernate.ddl-auto=update` (schema
 - `student-management-system` → `student_management`
 - `todo-apis` → `todo_app`
 - `user-apis` → `user`
+- `spring-boot-redis-projects/weather-app` → `weather_db` (unlike the others, its JDBC URL sets `createDatabaseIfNotExist=true`, so the database is created automatically — no manual `CREATE DATABASE` needed)
 
 All apps default to `server.port=8080`, so **only run one app at a time** unless ports are overridden.
+
+## Redis setup (weather-app)
+
+`spring-boot-redis-projects/weather-app` adds a Redis cache layer (`spring.cache.type=redis`, `spring.data.redis.*` in `application.properties`) on top of MySQL, connecting to `localhost:6379`. A `docker-compose.yml` in the app dir starts Redis (`redis:7.2`); the MySQL service in that file is commented out, so run MySQL yourself (or uncomment it). Start Redis with `docker compose up -d` from the app directory. `spring-boot-redis-projects/README.md` documents the raw `docker run`/`redis-cli` workflow and Redis Insight GUI.
 
 ## Kafka local setup
 
